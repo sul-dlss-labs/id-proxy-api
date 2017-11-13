@@ -2,24 +2,24 @@
 
 Microservice components:
 - Swagger API specification for loading into AWS API Gateway
-- Lambdas for running each operation tied to DLSS Identifiers Proxy API operation (tied to each route)
-- Testing framework and build for API and Lambdas
+- Lambdas (python) for running each operation tied to DLSS Identifiers Proxy API operation (tied to each route)
+- Testing framework and build tool for API and Lambdas
 - Eventually, deploy tools for loading this API into defined environments in AWS via Terraform or other framework
 
 ## Guiding Questions around original SURI Proxy API idea
 
 1. Why SURI Proxy?
-  - Better permissions management (currently, SURI uses shared passwords across local codebases).
-  - Separate the specification from the implementation / make connections more modular as SURI may (or may not?) change.
-  - Set up a pattern for building APIs as AWS work continues
-  - Capture better analytics for AWS querying SURI or future SDR components via these proxy APIs.
+    - Better permissions management (currently, SURI uses shared passwords across local codebases).
+    - Separate the specification from the implementation / make connections more modular as SURI may (or may not?) change.
+    - Set up a pattern for building APIs as AWS work continues
+    - Capture better analytics for AWS querying SURI or future SDR components via these proxy APIs.
 2. SURI Proxy API should be in AWS?
-  - Yes, if we can support in production. Given Hydrox is in AWS, SURI Proxy in AWS seems a good step for this.
+    - Yes, if we can support in production. Given Hydrox is in AWS, SURI Proxy in AWS seems a good step for this.
 3. Authentication for the SURI Proxy
-  - TBD: method and how we can improve this (but probably having authentication attached to a to-be-created AWS IAM
-    Service Role)
-  - Proposal of using API keys (a la GitHub) also proposed
-  - Protection of SURI: Using SSL?
+    - TBD: method and how we can improve this (but probably having authentication attached to a to-be-created AWS IAM
+      Service Role)
+    - Proposal of using API keys (a la GitHub) also proposed
+    - Protection of SURI: Using SSL?
 
 ## Requirements
 
@@ -33,3 +33,11 @@ Microservice components:
 ### For APIs generally:
 - Version the API
 - Elegant solution for retries / connection issues when calling SURI
+
+
+## Serverless Microservices / Applications Work Ideas
+
+1. Model applications & infrastructure resources
+2. Configure environments (out of scope for dataOps alone)
+3. Establish testing / validation model or framework.
+4. Automate delivery process (out of scope for dataOps alone)
