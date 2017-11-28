@@ -1,14 +1,24 @@
 import requests
 from requests.packages.urllib3.util.retry import Retry
 from xml.etree import ElementTree
-import os
 import logging
 import json
-import time
+import os
+from dotenv import load_dotenv, find_dotenv
 
+# Call & load env variables from .env file or environment
+load_dotenv(find_dotenv(), override=True)
+API_ENV = os.environ['API_ENV']
+DRUID_USERNAME = os.environ['DRUID_USERNAME']
+DRUID_PWORD = os.environ['DRUID_PASSWORD']
+
+# Start logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-api_env = os.environ['api_env']
+
+# Set global SURI HTTP call parameters
+suri_url = 'https://{0}:{1}@sul-lyberservices-{2}.stanford.edu/suri2/'
+suri_ns_url = suri_url + 'namespaces/druid'
 retry = Retry(
     # Maximum number of connection retries
     total = 5,
@@ -17,20 +27,14 @@ retry = Retry(
     )
 retries = requests.adapters.HTTPAdapter(max_retries=retry)
 
-# DRUID Namespace variables
-druid_username = os.environ['druid_username']
-druid_pword = os.environ['druid_pword']
-suri_ns_url = "https://{0}:{1}@sul-lyberservices-{2}.stanford.edu/suri2/namespaces/druid"
-druid_ns_url = suri_ns_url.format(druid_username, druid_pword, api_env)
-druid_ns_url_safe = suri_ns_url.format(druid_username, "password", api_env)
-
 def handler(event, context):
     """Retrieve namespace / source information from ID systems proxied."""
     sources = []
 
     # Handle DRUIDs
+    druid_ns_url = suri_ns_url.format(DRUID_USERNAME, DRUID_PWORD, API_ENV)
+    druid_ns_url_safe = suri_ns_url.format(DRUID_USERNAME, "password", API_ENV)
     logger.info('Starting a DRUID Namespace call: {0}'.format(druid_ns_url_safe))
-    logger.info('Calling lyberservices test.')
 
     try:
         session = requests.Session()

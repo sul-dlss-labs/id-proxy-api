@@ -3,8 +3,8 @@ from compose.cli.main import TopLevelCommand, project_from_options
 import shutil
 import os
 
-id_lambda = '/Users/sul.cmharlow/Code/src/github.org/sul-dlss-labs/id-proxy-api/lambdas/getIdentifiersInfo.zip'
-requirements = '/Users/sul.cmharlow/Code/src/github.org/sul-dlss-labs/id-proxy-api/requirements.txt'
+id_lambda = '../../lambdas/getIdentifiersInfo.zip'
+requirements = '../../requirements.txt'
 
 class TestLambdaClass:
     options = {"--no-deps": False,
