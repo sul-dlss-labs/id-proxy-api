@@ -1,10 +1,10 @@
+from dotenv import load_dotenv, find_dotenv
+import json
+import logging
+import os
 import requests
 from requests.packages.urllib3.util.retry import Retry
 from xml.etree import ElementTree
-import logging
-import json
-import os
-from dotenv import load_dotenv, find_dotenv
 
 # Call & load env variables from .env file or environment
 load_dotenv(find_dotenv(), override=True)
@@ -21,11 +21,12 @@ suri_url = 'https://{0}:{1}@sul-lyberservices-{2}.stanford.edu/suri2/'
 suri_ns_url = suri_url + 'namespaces/druid'
 retry = Retry(
     # Maximum number of connection retries
-    total = 5,
+    total=5,
     # backoff factor is in milliseconds
-    backoff_factor = .01
+    backoff_factor=.01
     )
 retries = requests.adapters.HTTPAdapter(max_retries=retry)
+
 
 def handler(event, context):
     """Retrieve namespace / source information from ID systems proxied."""
@@ -33,12 +34,12 @@ def handler(event, context):
 
     # Handle DRUIDs
     druid_ns_url = suri_ns_url.format(DRUID_USERNAME, DRUID_PWORD, API_ENV)
-    druid_ns_url_safe = suri_ns_url.format(DRUID_USERNAME, "password", API_ENV)
-    logger.info('Starting a DRUID Namespace call: {0}'.format(druid_ns_url_safe))
+    druid_ns_url_safe = suri_ns_url.format(DRUID_USERNAME, 'password', API_ENV)
+    logger.info('Starting DRUID Namespace call: {0}'.format(druid_ns_url_safe))
 
     try:
         session = requests.Session()
-        session.mount("https://", retries)
+        session.mount('https://', retries)
         resp = session.get(druid_ns_url)
         tree = ElementTree.fromstring(resp.content)
         logger.info('Parsing SURI response for DRUID Namespace.')
@@ -47,7 +48,6 @@ def handler(event, context):
             source['name'] = ns.find('name').text
             source['template'] = ns.find('template').text
             sources.append(source)
-
         return({'body': sources})
     except requests.exceptions.RequestException as e:
         exception_class = e.__class__.__name__
@@ -57,13 +57,14 @@ def handler(event, context):
 
 def handle_network_errors(exception_class, exception_msg):
     api_exception_obj = {
-        "isError": True,
-        "type": exception_class,
-        "message": exception_msg
+        'isError': True,
+        'type': exception_class,
+        'message': exception_msg
     }
 
     api_exception_json = json.dumps(api_exception_obj)
-    raise LambdaException(api_exception_json)
+    raise InfoLambdaException(api_exception_json)
 
-class LambdaException(Exception):
+
+class InfoLambdaException(Exception):
     pass
