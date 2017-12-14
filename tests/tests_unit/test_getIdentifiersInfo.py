@@ -38,6 +38,7 @@ class TestInfoLambdaClass:
         TestInfoLambdaClass.cmd.down(TestInfoLambdaClass.options)
 
     def test_invoke(self):
+        envs = utils.generate_envs()
         lambda_client = aws_stack.connect_to_service('lambda')
         lambda_fp = inspect.getfile(handler)
         id_info_zip = utils.generate_lambda_zip(lambda_fp, write=True)
@@ -45,6 +46,7 @@ class TestInfoLambdaClass:
                                       Runtime='python3.6',
                                       Role='r1',
                                       Handler='handler.handler',
-                                      Code={'ZipFile': id_info_zip})
+                                      Code={'ZipFile': id_info_zip},
+                                      envvars=str(envs))
         response = lambda_client.invoke(FunctionName='f1')
         print(response['Payload'].read())
