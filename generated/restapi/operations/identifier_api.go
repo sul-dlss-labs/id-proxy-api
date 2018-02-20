@@ -20,9 +20,9 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewAppAPI creates a new App instance
-func NewAppAPI(spec *loads.Document) *AppAPI {
-	return &AppAPI{
+// NewIdentifierAPI creates a new Identifier instance
+func NewIdentifierAPI(spec *loads.Document) *IdentifierAPI {
+	return &IdentifierAPI{
 		handlers:            make(map[string]map[string]http.Handler),
 		formats:             strfmt.Default,
 		defaultConsumes:     "application/json",
@@ -35,14 +35,26 @@ func NewAppAPI(spec *loads.Document) *AppAPI {
 		BearerAuthenticator: security.BearerAuth,
 		JSONConsumer:        runtime.JSONConsumer(),
 		JSONProducer:        runtime.JSONProducer(),
+		GetCurrentDRUIDSHandler: GetCurrentDRUIDSHandlerFunc(func(params GetCurrentDRUIDSParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetCurrentDRUIDS has not yet been implemented")
+		}),
+		GetIdentifiersInfoHandler: GetIdentifiersInfoHandlerFunc(func(params GetIdentifiersInfoParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetIdentifiersInfo has not yet been implemented")
+		}),
+		GetIdentifiersListHandler: GetIdentifiersListHandlerFunc(func(params GetIdentifiersListParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetIdentifiersList has not yet been implemented")
+		}),
 		HealthCheckHandler: HealthCheckHandlerFunc(func(params HealthCheckParams) middleware.Responder {
 			return middleware.NotImplemented("operation HealthCheck has not yet been implemented")
+		}),
+		MintNewDRUIDSHandler: MintNewDRUIDSHandlerFunc(func(params MintNewDRUIDSParams) middleware.Responder {
+			return middleware.NotImplemented("operation MintNewDRUIDS has not yet been implemented")
 		}),
 	}
 }
 
-/*AppAPI Template Application */
-type AppAPI struct {
+/*IdentifierAPI An API for providing identifiers. */
+type IdentifierAPI struct {
 	spec            *loads.Document
 	context         *middleware.Context
 	handlers        map[string]map[string]http.Handler
@@ -67,8 +79,16 @@ type AppAPI struct {
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
 
+	// GetCurrentDRUIDSHandler sets the operation handler for the get current d r uids operation
+	GetCurrentDRUIDSHandler GetCurrentDRUIDSHandler
+	// GetIdentifiersInfoHandler sets the operation handler for the get identifiers info operation
+	GetIdentifiersInfoHandler GetIdentifiersInfoHandler
+	// GetIdentifiersListHandler sets the operation handler for the get identifiers list operation
+	GetIdentifiersListHandler GetIdentifiersListHandler
 	// HealthCheckHandler sets the operation handler for the health check operation
 	HealthCheckHandler HealthCheckHandler
+	// MintNewDRUIDSHandler sets the operation handler for the mint new d r uids operation
+	MintNewDRUIDSHandler MintNewDRUIDSHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -86,42 +106,42 @@ type AppAPI struct {
 }
 
 // SetDefaultProduces sets the default produces media type
-func (o *AppAPI) SetDefaultProduces(mediaType string) {
+func (o *IdentifierAPI) SetDefaultProduces(mediaType string) {
 	o.defaultProduces = mediaType
 }
 
 // SetDefaultConsumes returns the default consumes media type
-func (o *AppAPI) SetDefaultConsumes(mediaType string) {
+func (o *IdentifierAPI) SetDefaultConsumes(mediaType string) {
 	o.defaultConsumes = mediaType
 }
 
 // SetSpec sets a spec that will be served for the clients.
-func (o *AppAPI) SetSpec(spec *loads.Document) {
+func (o *IdentifierAPI) SetSpec(spec *loads.Document) {
 	o.spec = spec
 }
 
 // DefaultProduces returns the default produces media type
-func (o *AppAPI) DefaultProduces() string {
+func (o *IdentifierAPI) DefaultProduces() string {
 	return o.defaultProduces
 }
 
 // DefaultConsumes returns the default consumes media type
-func (o *AppAPI) DefaultConsumes() string {
+func (o *IdentifierAPI) DefaultConsumes() string {
 	return o.defaultConsumes
 }
 
 // Formats returns the registered string formats
-func (o *AppAPI) Formats() strfmt.Registry {
+func (o *IdentifierAPI) Formats() strfmt.Registry {
 	return o.formats
 }
 
 // RegisterFormat registers a custom format validator
-func (o *AppAPI) RegisterFormat(name string, format strfmt.Format, validator strfmt.Validator) {
+func (o *IdentifierAPI) RegisterFormat(name string, format strfmt.Format, validator strfmt.Validator) {
 	o.formats.Add(name, format, validator)
 }
 
-// Validate validates the registrations in the AppAPI
-func (o *AppAPI) Validate() error {
+// Validate validates the registrations in the IdentifierAPI
+func (o *IdentifierAPI) Validate() error {
 	var unregistered []string
 
 	if o.JSONConsumer == nil {
@@ -132,8 +152,24 @@ func (o *AppAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.GetCurrentDRUIDSHandler == nil {
+		unregistered = append(unregistered, "GetCurrentDRUIDSHandler")
+	}
+
+	if o.GetIdentifiersInfoHandler == nil {
+		unregistered = append(unregistered, "GetIdentifiersInfoHandler")
+	}
+
+	if o.GetIdentifiersListHandler == nil {
+		unregistered = append(unregistered, "GetIdentifiersListHandler")
+	}
+
 	if o.HealthCheckHandler == nil {
 		unregistered = append(unregistered, "HealthCheckHandler")
+	}
+
+	if o.MintNewDRUIDSHandler == nil {
+		unregistered = append(unregistered, "MintNewDRUIDSHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -144,26 +180,26 @@ func (o *AppAPI) Validate() error {
 }
 
 // ServeErrorFor gets a error handler for a given operation id
-func (o *AppAPI) ServeErrorFor(operationID string) func(http.ResponseWriter, *http.Request, error) {
+func (o *IdentifierAPI) ServeErrorFor(operationID string) func(http.ResponseWriter, *http.Request, error) {
 	return o.ServeError
 }
 
 // AuthenticatorsFor gets the authenticators for the specified security schemes
-func (o *AppAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
+func (o *IdentifierAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
 
 	return nil
 
 }
 
 // Authorizer returns the registered authorizer
-func (o *AppAPI) Authorizer() runtime.Authorizer {
+func (o *IdentifierAPI) Authorizer() runtime.Authorizer {
 
 	return nil
 
 }
 
 // ConsumersFor gets the consumers for the specified media types
-func (o *AppAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consumer {
+func (o *IdentifierAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consumer {
 
 	result := make(map[string]runtime.Consumer)
 	for _, mt := range mediaTypes {
@@ -179,7 +215,7 @@ func (o *AppAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consumer {
 }
 
 // ProducersFor gets the producers for the specified media types
-func (o *AppAPI) ProducersFor(mediaTypes []string) map[string]runtime.Producer {
+func (o *IdentifierAPI) ProducersFor(mediaTypes []string) map[string]runtime.Producer {
 
 	result := make(map[string]runtime.Producer)
 	for _, mt := range mediaTypes {
@@ -195,7 +231,7 @@ func (o *AppAPI) ProducersFor(mediaTypes []string) map[string]runtime.Producer {
 }
 
 // HandlerFor gets a http.Handler for the provided operation method and path
-func (o *AppAPI) HandlerFor(method, path string) (http.Handler, bool) {
+func (o *IdentifierAPI) HandlerFor(method, path string) (http.Handler, bool) {
 	if o.handlers == nil {
 		return nil, false
 	}
@@ -210,8 +246,8 @@ func (o *AppAPI) HandlerFor(method, path string) (http.Handler, bool) {
 	return h, ok
 }
 
-// Context returns the middleware context for the app API
-func (o *AppAPI) Context() *middleware.Context {
+// Context returns the middleware context for the identifier API
+func (o *IdentifierAPI) Context() *middleware.Context {
 	if o.context == nil {
 		o.context = middleware.NewRoutableContext(o.spec, o, nil)
 	}
@@ -219,7 +255,7 @@ func (o *AppAPI) Context() *middleware.Context {
 	return o.context
 }
 
-func (o *AppAPI) initHandlerCache() {
+func (o *IdentifierAPI) initHandlerCache() {
 	o.Context() // don't care about the result, just that the initialization happened
 
 	if o.handlers == nil {
@@ -229,13 +265,33 @@ func (o *AppAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/identifiers/druids"] = NewGetCurrentDRUIDS(o.context, o.GetCurrentDRUIDSHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/identifiers"] = NewGetIdentifiersInfo(o.context, o.GetIdentifiersInfoHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/identifiers/all"] = NewGetIdentifiersList(o.context, o.GetIdentifiersListHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/healthcheck"] = NewHealthCheck(o.context, o.HealthCheckHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/identifiers/druids"] = NewMintNewDRUIDS(o.context, o.MintNewDRUIDSHandler)
 
 }
 
 // Serve creates a http handler to serve the API over HTTP
 // can be used directly in http.ListenAndServe(":8000", api.Serve(nil))
-func (o *AppAPI) Serve(builder middleware.Builder) http.Handler {
+func (o *IdentifierAPI) Serve(builder middleware.Builder) http.Handler {
 	o.Init()
 
 	if o.Middleware != nil {
@@ -245,7 +301,7 @@ func (o *AppAPI) Serve(builder middleware.Builder) http.Handler {
 }
 
 // Init allows you to just initialize the handler cache, you can then recompose the middelware as you see fit
-func (o *AppAPI) Init() {
+func (o *IdentifierAPI) Init() {
 	if len(o.handlers) == 0 {
 		o.initHandlerCache()
 	}

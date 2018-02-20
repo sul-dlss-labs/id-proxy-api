@@ -14,12 +14,12 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// ErrorResponseErrors error response errors
-// swagger:model errorResponseErrors
-type ErrorResponseErrors []*Error
+// Sources sources
+// swagger:model Sources
+type Sources []*Source
 
-// Validate validates this error response errors
-func (m ErrorResponseErrors) Validate(formats strfmt.Registry) error {
+// Validate validates this sources
+func (m Sources) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	for i := 0; i < len(m); i++ {

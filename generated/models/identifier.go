@@ -10,19 +10,26 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
-// ErrorResponse error response
-// swagger:model ErrorResponse
-type ErrorResponse struct {
+// Identifier identifier
+// swagger:model Identifier
+type Identifier struct {
 
-	// errors
-	Errors ErrorResponseErrors `json:"errors"`
+	// id
+	// Required: true
+	ID *string `json:"id"`
 }
 
-// Validate validates this error response
-func (m *ErrorResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this identifier
+func (m *Identifier) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateID(formats); err != nil {
+		// prop
+		res = append(res, err)
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
@@ -30,8 +37,17 @@ func (m *ErrorResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *Identifier) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Required("id", "body", m.ID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // MarshalBinary interface implementation
-func (m *ErrorResponse) MarshalBinary() ([]byte, error) {
+func (m *Identifier) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -39,8 +55,8 @@ func (m *ErrorResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *ErrorResponse) UnmarshalBinary(b []byte) error {
-	var res ErrorResponse
+func (m *Identifier) UnmarshalBinary(b []byte) error {
+	var res Identifier
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

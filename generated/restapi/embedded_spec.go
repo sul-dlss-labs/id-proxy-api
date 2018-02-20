@@ -14,20 +14,24 @@ var SwaggerJSON json.RawMessage
 
 func init() {
 	SwaggerJSON = json.RawMessage([]byte(`{
+  "produces": [
+    "application/json",
+    "text/text"
+  ],
   "schemes": [
     "http"
   ],
   "swagger": "2.0",
   "info": {
-    "description": "Template Application",
-    "title": "app",
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    "description": "An API for providing identifiers.",
+    "title": "identifier",
+    "contact": {
+      "name": "Christina Harlow",
+      "email": "cmharlow@stanford.edu"
     },
     "version": "0.1.0"
   },
-  "host": "app.dlss.stanford.edu",
+  "host": "identifiers.dlss.stanford.edu",
   "basePath": "/v1",
   "paths": {
     "/healthcheck": {
@@ -50,44 +54,76 @@ func init() {
           }
         }
       }
+    },
+    "/identifiers": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "getIdentifiersInfo",
+        "responses": {
+          "200": {
+            "description": "Get a list of identifier types \u0026 sources supported",
+            "schema": {
+              "$ref": "#/definitions/Sources"
+            }
+          }
+        }
+      }
+    },
+    "/identifiers/all": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "getIdentifiersList",
+        "responses": {
+          "200": {
+            "description": "Get a list of all Identifiers minted across types",
+            "schema": {
+              "$ref": "#/definitions/Sources"
+            }
+          }
+        }
+      }
+    },
+    "/identifiers/druids": {
+      "get": {
+        "operationId": "getCurrentDRUIDs",
+        "responses": {
+          "200": {
+            "description": "List of DRUIDs currently being used",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Identifiers"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "mintNewDRUIDs",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Number of DRUIDs to mint. Default is 1.",
+            "name": "quantity",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New DRUIDs Created",
+            "schema": {
+              "$ref": "#/definitions/Identifiers"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
-    "Error": {
-      "type": "object",
-      "properties": {
-        "detail": {
-          "description": "a human-readable explanation specific to this occurrence of the problem.",
-          "type": "string",
-          "example": "Title must contain at least three characters."
-        },
-        "source": {
-          "type": "object",
-          "properties": {
-            "pointer": {
-              "type": "string",
-              "example": "/data/attributes/title"
-            }
-          }
-        },
-        "title": {
-          "description": "a short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem.",
-          "type": "string",
-          "example": "Invalid Attribute"
-        }
-      }
-    },
-    "ErrorResponse": {
-      "type": "object",
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Error"
-          }
-        }
-      }
-    },
     "HealthCheckResponse": {
       "type": "object",
       "properties": {
@@ -98,6 +134,44 @@ func init() {
       },
       "example": {
         "status": "OK"
+      }
+    },
+    "Identifier": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "Identifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Identifier"
+      }
+    },
+    "Source": {
+      "type": "object",
+      "required": [
+        "name",
+        "template"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        }
+      }
+    },
+    "Sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Source"
       }
     }
   }

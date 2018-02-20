@@ -18,11 +18,11 @@ import (
 
 //go:generate swagger generate server --target ../generated --name  --spec ../swagger.json --exclude-main
 
-func configureFlags(api *operations.AppAPI) {
+func configureFlags(api *operations.IdentifierAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
 
-func configureAPI(api *operations.AppAPI) http.Handler {
+func configureAPI(api *operations.IdentifierAPI) http.Handler {
 	// configure the api here
 	api.ServeError = errors.ServeError
 
@@ -36,8 +36,20 @@ func configureAPI(api *operations.AppAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
+	api.GetCurrentDRUIDSHandler = operations.GetCurrentDRUIDSHandlerFunc(func(params operations.GetCurrentDRUIDSParams) middleware.Responder {
+		return middleware.NotImplemented("operation .GetCurrentDRUIDS has not yet been implemented")
+	})
+	api.GetIdentifiersInfoHandler = operations.GetIdentifiersInfoHandlerFunc(func(params operations.GetIdentifiersInfoParams) middleware.Responder {
+		return middleware.NotImplemented("operation .GetIdentifiersInfo has not yet been implemented")
+	})
+	api.GetIdentifiersListHandler = operations.GetIdentifiersListHandlerFunc(func(params operations.GetIdentifiersListParams) middleware.Responder {
+		return middleware.NotImplemented("operation .GetIdentifiersList has not yet been implemented")
+	})
 	api.HealthCheckHandler = operations.HealthCheckHandlerFunc(func(params operations.HealthCheckParams) middleware.Responder {
 		return middleware.NotImplemented("operation .HealthCheck has not yet been implemented")
+	})
+	api.MintNewDRUIDSHandler = operations.MintNewDRUIDSHandlerFunc(func(params operations.MintNewDRUIDSParams) middleware.Responder {
+		return middleware.NotImplemented("operation .MintNewDRUIDS has not yet been implemented")
 	})
 
 	api.ServerShutdown = func() {}

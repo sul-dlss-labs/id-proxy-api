@@ -74,6 +74,7 @@ $ ./appd
 Then you can interact with it using `curl`:
 ```shell
 $ curl http://localhost:8080/v1/healthcheck
+$ curl -X POST http://localhost:8080/v1/identifiers/druids
 ```
 
 ## Testing
