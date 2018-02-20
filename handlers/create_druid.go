@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	app "github.com/sul-dlss-labs/id-proxy-api"
+	"github.com/sul-dlss-labs/id-proxy-api/druid"
 	"github.com/sul-dlss-labs/id-proxy-api/generated/models"
 	"github.com/sul-dlss-labs/id-proxy-api/generated/restapi/operations"
 )
@@ -17,7 +18,7 @@ func NewCreateDruid(rt *app.Runtime) *CreateDruid {
 
 // Handle the HTTP response to /identifiers/druids
 func (d *CreateDruid) Handle(params operations.MintNewDRUIDSParams) middleware.Responder {
-	id := "testing"
+	id := druid.Generate()
 	identifier := &models.Identifier{ID: &id}
 	identifiers := []*models.Identifier{identifier}
 	return operations.NewMintNewDRUIDSOK().WithPayload(identifiers)
