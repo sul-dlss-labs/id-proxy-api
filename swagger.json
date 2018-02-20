@@ -12,7 +12,6 @@
   "host": "identifiers.dlss.stanford.edu",
   "basePath": "/v1",
   "schemes": ["http"],
-  "produces": ["application/json", "text/text"],
   "paths": {
     "/identifiers": {
       "get": {

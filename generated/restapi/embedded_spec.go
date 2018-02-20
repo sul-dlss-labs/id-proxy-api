@@ -14,10 +14,6 @@ var SwaggerJSON json.RawMessage
 
 func init() {
 	SwaggerJSON = json.RawMessage([]byte(`{
-  "produces": [
-    "application/json",
-    "text/text"
-  ],
   "schemes": [
     "http"
   ],
