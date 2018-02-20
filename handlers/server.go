@@ -17,6 +17,7 @@ func BuildAPI(rt *app.Runtime) *operations.IdentifierAPI {
 	api := operations.NewIdentifierAPI(swaggerSpec())
 	// Add custom handlers here
 	api.HealthCheckHandler = NewHealthCheck(rt)
+	api.MintNewDRUIDSHandler = NewCreateDruid(rt)
 	return api
 }
 
