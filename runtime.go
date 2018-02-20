@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/sul-dlss-labs/swagger-go-template/config"
+	"github.com/sul-dlss-labs/id-proxy-api/config"
 )
 
 // NewRuntime creates a new application level runtime that

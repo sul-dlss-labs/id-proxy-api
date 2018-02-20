@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	app "github.com/sul-dlss-labs/swagger-go-template"
+	app "github.com/sul-dlss-labs/id-proxy-api"
 )
 
 func setupFakeRuntime() *TestEnv {

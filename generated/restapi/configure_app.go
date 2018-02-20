@@ -11,7 +11,7 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 	graceful "github.com/tylerb/graceful"
 
-	"github.com/sul-dlss-labs/swagger-go-template/generated/restapi/operations"
+	"github.com/sul-dlss-labs/id-proxy-api/generated/restapi/operations"
 )
 
 // This file is safe to edit. Once it exists it will not be overwritten

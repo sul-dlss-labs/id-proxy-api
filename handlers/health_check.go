@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	app "github.com/sul-dlss-labs/swagger-go-template"
-	"github.com/sul-dlss-labs/swagger-go-template/generated/models"
-	"github.com/sul-dlss-labs/swagger-go-template/generated/restapi/operations"
+	app "github.com/sul-dlss-labs/id-proxy-api"
+	"github.com/sul-dlss-labs/id-proxy-api/generated/models"
+	"github.com/sul-dlss-labs/id-proxy-api/generated/restapi/operations"
 )
 
 // NewHealthCheck will return the service health
