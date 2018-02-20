@@ -49,7 +49,7 @@ $ cd cmd/app
 $ APP_PORT=1231 go run main.go
 ```
 
-## Building the Binary
+## Building the server binary
 
 ### Building for Docker
 ```shell
@@ -64,7 +64,7 @@ This will create a binary in your path that you can then run the application wit
 $ go build -o appd cmd/app/main.go
 ```
 
-## Running the binary
+## Running the server
 
 Now start the API server:
 ```shell
