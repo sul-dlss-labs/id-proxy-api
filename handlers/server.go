@@ -17,6 +17,7 @@ func BuildAPI(rt *app.Runtime) *operations.IDServiceAPI {
 	api := operations.NewIDServiceAPI(swaggerSpec())
 	// Add custom handlers here
 	api.MintNewDRUIDSHandler = NewCreateDruid(rt)
+	api.GetIdentifiersInfoHandler = NewIdentifiersInfo(rt)
 	return api
 }
 

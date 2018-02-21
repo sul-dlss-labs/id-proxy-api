@@ -26,3 +26,14 @@ func TestCreateDruid(t *testing.T) {
 		JSONSchema(schema).
 		Done()
 }
+
+func TestIdentifiers(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test in short mode")
+	}
+	setupTest().Get("/v1/identifiers").
+		Expect(t).
+		Status(200).
+		Type("json").
+		Done()
+}
