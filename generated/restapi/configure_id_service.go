@@ -18,11 +18,11 @@ import (
 
 //go:generate swagger generate server --target ../generated --name  --spec ../swagger.json --exclude-main
 
-func configureFlags(api *operations.IdentifierAPI) {
+func configureFlags(api *operations.IDServiceAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
 
-func configureAPI(api *operations.IdentifierAPI) http.Handler {
+func configureAPI(api *operations.IDServiceAPI) http.Handler {
 	// configure the api here
 	api.ServeError = errors.ServeError
 
@@ -44,9 +44,6 @@ func configureAPI(api *operations.IdentifierAPI) http.Handler {
 	})
 	api.GetIdentifiersListHandler = operations.GetIdentifiersListHandlerFunc(func(params operations.GetIdentifiersListParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetIdentifiersList has not yet been implemented")
-	})
-	api.HealthCheckHandler = operations.HealthCheckHandlerFunc(func(params operations.HealthCheckParams) middleware.Responder {
-		return middleware.NotImplemented("operation .HealthCheck has not yet been implemented")
 	})
 	api.MintNewDRUIDSHandler = operations.MintNewDRUIDSHandlerFunc(func(params operations.MintNewDRUIDSParams) middleware.Responder {
 		return middleware.NotImplemented("operation .MintNewDRUIDS has not yet been implemented")

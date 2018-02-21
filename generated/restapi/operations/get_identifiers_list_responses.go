@@ -25,7 +25,7 @@ type GetIdentifiersListOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.Sources `json:"body,omitempty"`
+	Payload models.Identifiers `json:"body,omitempty"`
 }
 
 // NewGetIdentifiersListOK creates GetIdentifiersListOK with default headers values
@@ -34,13 +34,13 @@ func NewGetIdentifiersListOK() *GetIdentifiersListOK {
 }
 
 // WithPayload adds the payload to the get identifiers list o k response
-func (o *GetIdentifiersListOK) WithPayload(payload models.Sources) *GetIdentifiersListOK {
+func (o *GetIdentifiersListOK) WithPayload(payload models.Identifiers) *GetIdentifiersListOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get identifiers list o k response
-func (o *GetIdentifiersListOK) SetPayload(payload models.Sources) {
+func (o *GetIdentifiersListOK) SetPayload(payload models.Identifiers) {
 	o.Payload = payload
 }
 
@@ -50,11 +50,34 @@ func (o *GetIdentifiersListOK) WriteResponse(rw http.ResponseWriter, producer ru
 	rw.WriteHeader(200)
 	payload := o.Payload
 	if payload == nil {
-		payload = make(models.Sources, 0, 50)
+		payload = make(models.Identifiers, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {
 		panic(err) // let the recovery middleware deal with this
 	}
 
+}
+
+// GetIdentifiersListInternalServerErrorCode is the HTTP code returned for type GetIdentifiersListInternalServerError
+const GetIdentifiersListInternalServerErrorCode int = 500
+
+/*GetIdentifiersListInternalServerError Your request could not be processed at this time.
+
+swagger:response getIdentifiersListInternalServerError
+*/
+type GetIdentifiersListInternalServerError struct {
+}
+
+// NewGetIdentifiersListInternalServerError creates GetIdentifiersListInternalServerError with default headers values
+func NewGetIdentifiersListInternalServerError() *GetIdentifiersListInternalServerError {
+	return &GetIdentifiersListInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *GetIdentifiersListInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(500)
 }

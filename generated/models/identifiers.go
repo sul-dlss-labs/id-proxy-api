@@ -11,12 +11,11 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
-	"github.com/go-openapi/swag"
 )
 
 // Identifiers identifiers
 // swagger:model Identifiers
-type Identifiers []*Identifier
+type Identifiers []Identifier
 
 // Validate validates this identifiers
 func (m Identifiers) Validate(formats strfmt.Registry) error {
@@ -24,18 +23,11 @@ func (m Identifiers) Validate(formats strfmt.Registry) error {
 
 	for i := 0; i < len(m); i++ {
 
-		if swag.IsZero(m[i]) { // not required
-			continue
-		}
-
-		if m[i] != nil {
-
-			if err := m[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName(strconv.Itoa(i))
-				}
-				return err
+		if err := m[i].Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName(strconv.Itoa(i))
 			}
+			return err
 		}
 
 	}

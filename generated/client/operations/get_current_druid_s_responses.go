@@ -32,6 +32,13 @@ func (o *GetCurrentDRUIDSReader) ReadResponse(response runtime.ClientResponse, c
 		}
 		return result, nil
 
+	case 500:
+		result := NewGetCurrentDRUIDSInternalServerError()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
@@ -47,7 +54,7 @@ func NewGetCurrentDRUIDSOK() *GetCurrentDRUIDSOK {
 List of DRUIDs currently being used
 */
 type GetCurrentDRUIDSOK struct {
-	Payload models.GetCurrentDRUIDSOKBody
+	Payload models.Identifiers
 }
 
 func (o *GetCurrentDRUIDSOK) Error() string {
@@ -60,6 +67,27 @@ func (o *GetCurrentDRUIDSOK) readResponse(response runtime.ClientResponse, consu
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
+
+	return nil
+}
+
+// NewGetCurrentDRUIDSInternalServerError creates a GetCurrentDRUIDSInternalServerError with default headers values
+func NewGetCurrentDRUIDSInternalServerError() *GetCurrentDRUIDSInternalServerError {
+	return &GetCurrentDRUIDSInternalServerError{}
+}
+
+/*GetCurrentDRUIDSInternalServerError handles this case with default header values.
+
+Your request could not be processed at this time.
+*/
+type GetCurrentDRUIDSInternalServerError struct {
+}
+
+func (o *GetCurrentDRUIDSInternalServerError) Error() string {
+	return fmt.Sprintf("[GET /identifiers/druids][%d] getCurrentDRUidsInternalServerError ", 500)
+}
+
+func (o *GetCurrentDRUIDSInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }

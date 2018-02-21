@@ -14,13 +14,13 @@ import (
 	"github.com/sul-dlss-labs/identifier-service/generated/client/operations"
 )
 
-// Default identifier HTTP client.
+// Default ID service HTTP client.
 var Default = NewHTTPClient(nil)
 
 const (
 	// DefaultHost is the default Host
 	// found in Meta (info) section of spec file
-	DefaultHost string = "identifiers.dlss.stanford.edu"
+	DefaultHost string = "sdr.dlss.stanford.edu"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
 	DefaultBasePath string = "/v1"
@@ -29,14 +29,14 @@ const (
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
 var DefaultSchemes = []string{"http"}
 
-// NewHTTPClient creates a new identifier HTTP client.
-func NewHTTPClient(formats strfmt.Registry) *Identifier {
+// NewHTTPClient creates a new ID service HTTP client.
+func NewHTTPClient(formats strfmt.Registry) *IDService {
 	return NewHTTPClientWithConfig(formats, nil)
 }
 
-// NewHTTPClientWithConfig creates a new identifier HTTP client,
+// NewHTTPClientWithConfig creates a new ID service HTTP client,
 // using a customizable transport config.
-func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *Identifier {
+func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *IDService {
 	// ensure nullable parameters have default
 	if formats == nil {
 		formats = strfmt.Default
@@ -50,9 +50,9 @@ func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *Ide
 	return New(transport, formats)
 }
 
-// New creates a new identifier client
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Identifier {
-	cli := new(Identifier)
+// New creates a new ID service client
+func New(transport runtime.ClientTransport, formats strfmt.Registry) *IDService {
+	cli := new(IDService)
 	cli.Transport = transport
 
 	cli.Operations = operations.New(transport, formats)
@@ -99,15 +99,15 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 	return cfg
 }
 
-// Identifier is a client for identifier
-type Identifier struct {
+// IDService is a client for ID service
+type IDService struct {
 	Operations *operations.Client
 
 	Transport runtime.ClientTransport
 }
 
 // SetTransport changes the transport on the client and all its subresources
-func (c *Identifier) SetTransport(transport runtime.ClientTransport) {
+func (c *IDService) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
 	c.Operations.SetTransport(transport)

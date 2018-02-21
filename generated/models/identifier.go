@@ -7,59 +7,13 @@ package models
 
 import (
 	strfmt "github.com/go-openapi/strfmt"
-
-	"github.com/go-openapi/errors"
-	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // Identifier identifier
 // swagger:model Identifier
-type Identifier struct {
-
-	// id
-	// Required: true
-	ID *string `json:"id"`
-}
+type Identifier string
 
 // Validate validates this identifier
-func (m *Identifier) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateID(formats); err != nil {
-		// prop
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *Identifier) validateID(formats strfmt.Registry) error {
-
-	if err := validate.Required("id", "body", m.ID); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *Identifier) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *Identifier) UnmarshalBinary(b []byte) error {
-	var res Identifier
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
+func (m Identifier) Validate(formats strfmt.Registry) error {
 	return nil
 }

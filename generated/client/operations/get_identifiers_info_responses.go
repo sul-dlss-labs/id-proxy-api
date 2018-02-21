@@ -32,6 +32,13 @@ func (o *GetIdentifiersInfoReader) ReadResponse(response runtime.ClientResponse,
 		}
 		return result, nil
 
+	case 500:
+		result := NewGetIdentifiersInfoInternalServerError()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
@@ -44,7 +51,7 @@ func NewGetIdentifiersInfoOK() *GetIdentifiersInfoOK {
 
 /*GetIdentifiersInfoOK handles this case with default header values.
 
-Get a list of identifier types & sources supported
+Get a list of identifier minters supported by this API.
 */
 type GetIdentifiersInfoOK struct {
 	Payload models.Sources
@@ -60,6 +67,27 @@ func (o *GetIdentifiersInfoOK) readResponse(response runtime.ClientResponse, con
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
+
+	return nil
+}
+
+// NewGetIdentifiersInfoInternalServerError creates a GetIdentifiersInfoInternalServerError with default headers values
+func NewGetIdentifiersInfoInternalServerError() *GetIdentifiersInfoInternalServerError {
+	return &GetIdentifiersInfoInternalServerError{}
+}
+
+/*GetIdentifiersInfoInternalServerError handles this case with default header values.
+
+Your request could not be processed at this time.
+*/
+type GetIdentifiersInfoInternalServerError struct {
+}
+
+func (o *GetIdentifiersInfoInternalServerError) Error() string {
+	return fmt.Sprintf("[GET /identifiers][%d] getIdentifiersInfoInternalServerError ", 500)
+}
+
+func (o *GetIdentifiersInfoInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }

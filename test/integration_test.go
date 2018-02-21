@@ -13,15 +13,16 @@ func setupTest() *baloo.Client {
 	return baloo.New(fmt.Sprintf("http://localhost:%v", port))
 }
 
-func TestHealthCheck(t *testing.T) {
+func TestCreateDruid(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping integration test in short mode")
 	}
-
-	setupTest().Get("/v1/healthcheck").
+	const schema = `{ "type": "array" }`
+	setupTest().Post("/v1/identifiers/druids").
+		Body(nil). // https://github.com/h2non/baloo/issues/21, https://github.com/go-swagger/go-swagger/issues/1430
 		Expect(t).
 		Status(200).
 		Type("json").
-		JSON(map[string]string{"status": "OK"}).
+		JSONSchema(schema).
 		Done()
 }

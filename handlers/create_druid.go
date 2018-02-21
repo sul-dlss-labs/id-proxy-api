@@ -18,8 +18,7 @@ func NewCreateDruid(rt *app.Runtime) *CreateDruid {
 
 // Handle the HTTP response to /identifiers/druids
 func (d *CreateDruid) Handle(params operations.MintNewDRUIDSParams) middleware.Responder {
-	id := druid.Generate()
-	identifier := &models.Identifier{ID: &id}
-	identifiers := []*models.Identifier{identifier}
+	identifier := models.Identifier(druid.Generate())
+	identifiers := []models.Identifier{identifier}
 	return operations.NewMintNewDRUIDSOK().WithPayload(identifiers)
 }

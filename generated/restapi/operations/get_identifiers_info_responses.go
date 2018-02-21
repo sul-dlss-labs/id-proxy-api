@@ -16,7 +16,7 @@ import (
 // GetIdentifiersInfoOKCode is the HTTP code returned for type GetIdentifiersInfoOK
 const GetIdentifiersInfoOKCode int = 200
 
-/*GetIdentifiersInfoOK Get a list of identifier types & sources supported
+/*GetIdentifiersInfoOK Get a list of identifier minters supported by this API.
 
 swagger:response getIdentifiersInfoOK
 */
@@ -57,4 +57,27 @@ func (o *GetIdentifiersInfoOK) WriteResponse(rw http.ResponseWriter, producer ru
 		panic(err) // let the recovery middleware deal with this
 	}
 
+}
+
+// GetIdentifiersInfoInternalServerErrorCode is the HTTP code returned for type GetIdentifiersInfoInternalServerError
+const GetIdentifiersInfoInternalServerErrorCode int = 500
+
+/*GetIdentifiersInfoInternalServerError Your request could not be processed at this time.
+
+swagger:response getIdentifiersInfoInternalServerError
+*/
+type GetIdentifiersInfoInternalServerError struct {
+}
+
+// NewGetIdentifiersInfoInternalServerError creates GetIdentifiersInfoInternalServerError with default headers values
+func NewGetIdentifiersInfoInternalServerError() *GetIdentifiersInfoInternalServerError {
+	return &GetIdentifiersInfoInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *GetIdentifiersInfoInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(500)
 }

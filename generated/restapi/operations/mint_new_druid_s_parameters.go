@@ -19,8 +19,12 @@ import (
 // NewMintNewDRUIDSParams creates a new MintNewDRUIDSParams object
 // with the default values initialized.
 func NewMintNewDRUIDSParams() MintNewDRUIDSParams {
-	var ()
-	return MintNewDRUIDSParams{}
+	var (
+		quantityDefault = int64(1)
+	)
+	return MintNewDRUIDSParams{
+		Quantity: &quantityDefault,
+	}
 }
 
 // MintNewDRUIDSParams contains all the bound params for the mint new d r uids operation
@@ -34,6 +38,7 @@ type MintNewDRUIDSParams struct {
 
 	/*Number of DRUIDs to mint. Default is 1.
 	  In: query
+	  Default: 1
 	*/
 	Quantity *int64
 }
@@ -63,6 +68,8 @@ func (o *MintNewDRUIDSParams) bindQuantity(rawData []string, hasKey bool, format
 		raw = rawData[len(rawData)-1]
 	}
 	if raw == "" { // empty values pass all other validations
+		var quantityDefault int64 = int64(1)
+		o.Quantity = &quantityDefault
 		return nil
 	}
 

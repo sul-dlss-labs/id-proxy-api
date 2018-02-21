@@ -22,8 +22,11 @@ import (
 // NewMintNewDRUIDSParams creates a new MintNewDRUIDSParams object
 // with the default values initialized.
 func NewMintNewDRUIDSParams() *MintNewDRUIDSParams {
-	var ()
+	var (
+		quantityDefault = int64(1)
+	)
 	return &MintNewDRUIDSParams{
+		Quantity: &quantityDefault,
 
 		timeout: cr.DefaultTimeout,
 	}
@@ -32,8 +35,11 @@ func NewMintNewDRUIDSParams() *MintNewDRUIDSParams {
 // NewMintNewDRUIDSParamsWithTimeout creates a new MintNewDRUIDSParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewMintNewDRUIDSParamsWithTimeout(timeout time.Duration) *MintNewDRUIDSParams {
-	var ()
+	var (
+		quantityDefault = int64(1)
+	)
 	return &MintNewDRUIDSParams{
+		Quantity: &quantityDefault,
 
 		timeout: timeout,
 	}
@@ -42,8 +48,11 @@ func NewMintNewDRUIDSParamsWithTimeout(timeout time.Duration) *MintNewDRUIDSPara
 // NewMintNewDRUIDSParamsWithContext creates a new MintNewDRUIDSParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewMintNewDRUIDSParamsWithContext(ctx context.Context) *MintNewDRUIDSParams {
-	var ()
+	var (
+		quantityDefault = int64(1)
+	)
 	return &MintNewDRUIDSParams{
+		Quantity: &quantityDefault,
 
 		Context: ctx,
 	}
@@ -52,8 +61,11 @@ func NewMintNewDRUIDSParamsWithContext(ctx context.Context) *MintNewDRUIDSParams
 // NewMintNewDRUIDSParamsWithHTTPClient creates a new MintNewDRUIDSParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewMintNewDRUIDSParamsWithHTTPClient(client *http.Client) *MintNewDRUIDSParams {
-	var ()
+	var (
+		quantityDefault = int64(1)
+	)
 	return &MintNewDRUIDSParams{
+		Quantity:   &quantityDefault,
 		HTTPClient: client,
 	}
 }

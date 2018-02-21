@@ -37,7 +37,7 @@ func (a *Client) GetCurrentDRUIDS(params *GetCurrentDRUIDSParams) (*GetCurrentDR
 		ID:                 "getCurrentDRUIDs",
 		Method:             "GET",
 		PathPattern:        "/identifiers/druids",
-		ProducesMediaTypes: []string{""},
+		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{""},
 		Schemes:            []string{"http"},
 		Params:             params,
@@ -109,36 +109,6 @@ func (a *Client) GetIdentifiersList(params *GetIdentifiersListParams) (*GetIdent
 }
 
 /*
-HealthCheck healths check
-
-The healthcheck endpoint provides information about the health of the service.
-*/
-func (a *Client) HealthCheck(params *HealthCheckParams) (*HealthCheckOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewHealthCheckParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "healthCheck",
-		Method:             "GET",
-		PathPattern:        "/healthcheck",
-		ProducesMediaTypes: []string{""},
-		ConsumesMediaTypes: []string{""},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &HealthCheckReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*HealthCheckOK), nil
-
-}
-
-/*
 MintNewDRUIDS mint new d r uids API
 */
 func (a *Client) MintNewDRUIDS(params *MintNewDRUIDSParams) (*MintNewDRUIDSOK, error) {
@@ -151,7 +121,7 @@ func (a *Client) MintNewDRUIDS(params *MintNewDRUIDSParams) (*MintNewDRUIDSOK, e
 		ID:                 "mintNewDRUIDs",
 		Method:             "POST",
 		PathPattern:        "/identifiers/druids",
-		ProducesMediaTypes: []string{""},
+		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{""},
 		Schemes:            []string{"http"},
 		Params:             params,

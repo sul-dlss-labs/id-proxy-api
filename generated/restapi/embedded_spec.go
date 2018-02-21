@@ -19,38 +19,17 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "An API for providing identifiers.",
-    "title": "identifier",
-    "contact": {
-      "name": "Christina Harlow",
-      "email": "cmharlow@stanford.edu"
+    "description": "An API for calling identifier minter services, mainly DRUIDs, primarily for usage by TACO.",
+    "title": "Id Service",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version": "0.1.0"
+    "version": "0.0.2"
   },
-  "host": "identifiers.dlss.stanford.edu",
+  "host": "sdr.dlss.stanford.edu",
   "basePath": "/v1",
   "paths": {
-    "/healthcheck": {
-      "get": {
-        "description": "The healthcheck endpoint provides information about the health of the service.",
-        "summary": "Health Check",
-        "operationId": "healthCheck",
-        "responses": {
-          "200": {
-            "description": "The service is functioning nominally",
-            "schema": {
-              "$ref": "#/definitions/HealthCheckResponse"
-            }
-          },
-          "503": {
-            "description": "The service is not working correctly",
-            "schema": {
-              "$ref": "#/definitions/HealthCheckResponse"
-            }
-          }
-        }
-      }
-    },
     "/identifiers": {
       "get": {
         "produces": [
@@ -59,10 +38,13 @@ func init() {
         "operationId": "getIdentifiersInfo",
         "responses": {
           "200": {
-            "description": "Get a list of identifier types \u0026 sources supported",
+            "description": "Get a list of identifier minters supported by this API.",
             "schema": {
               "$ref": "#/definitions/Sources"
             }
+          },
+          "500": {
+            "description": "Your request could not be processed at this time."
           }
         }
       }
@@ -77,32 +59,42 @@ func init() {
           "200": {
             "description": "Get a list of all Identifiers minted across types",
             "schema": {
-              "$ref": "#/definitions/Sources"
+              "$ref": "#/definitions/Identifiers"
             }
+          },
+          "500": {
+            "description": "Your request could not be processed at this time."
           }
         }
       }
     },
     "/identifiers/druids": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
         "operationId": "getCurrentDRUIDs",
         "responses": {
           "200": {
             "description": "List of DRUIDs currently being used",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Identifiers"
-              }
+              "$ref": "#/definitions/Identifiers"
             }
+          },
+          "500": {
+            "description": "Your request could not be processed at this time."
           }
         }
       },
       "post": {
+        "produces": [
+          "application/json"
+        ],
         "operationId": "mintNewDRUIDs",
         "parameters": [
           {
             "type": "integer",
+            "default": 1,
             "description": "Number of DRUIDs to mint. Default is 1.",
             "name": "quantity",
             "in": "query"
@@ -120,34 +112,19 @@ func init() {
     }
   },
   "definitions": {
-    "HealthCheckResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "description": "The status of the service",
-          "type": "string"
-        }
-      },
-      "example": {
-        "status": "OK"
-      }
-    },
     "Identifier": {
-      "type": "object",
-      "required": [
-        "id"
-      ],
-      "properties": {
-        "id": {
-          "type": "string"
-        }
-      }
+      "type": "string",
+      "example": "aa222bb3333"
     },
     "Identifiers": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/Identifier"
-      }
+      },
+      "example": [
+        "aa222bb3333",
+        "dd444ee5555"
+      ]
     },
     "Source": {
       "type": "object",
@@ -162,13 +139,27 @@ func init() {
         "template": {
           "type": "string"
         }
+      },
+      "example": {
+        "name": "DRUID",
+        "template": "r:zznnnzznnnn"
       }
     },
     "Sources": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/Source"
-      }
+      },
+      "example": [
+        {
+          "name": "DRUID",
+          "template": "r:zznnnzznnnn"
+        },
+        {
+          "name": "DOI",
+          "template": "r:doi:zznnnzznnnn"
+        }
+      ]
     }
   }
 }`))

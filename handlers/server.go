@@ -13,16 +13,15 @@ import (
 )
 
 // BuildAPI create new service API
-func BuildAPI(rt *app.Runtime) *operations.IdentifierAPI {
-	api := operations.NewIdentifierAPI(swaggerSpec())
+func BuildAPI(rt *app.Runtime) *operations.IDServiceAPI {
+	api := operations.NewIDServiceAPI(swaggerSpec())
 	// Add custom handlers here
-	api.HealthCheckHandler = NewHealthCheck(rt)
 	api.MintNewDRUIDSHandler = NewCreateDruid(rt)
 	return api
 }
 
 // BuildHandler sets up the middleware that wraps the API
-func BuildHandler(api *operations.IdentifierAPI) http.Handler {
+func BuildHandler(api *operations.IDServiceAPI) http.Handler {
 	return alice.New(
 		middleware.NewHoneyBadgerMW(),
 		middleware.NewRecoveryMW(),
