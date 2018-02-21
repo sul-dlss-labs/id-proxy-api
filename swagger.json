@@ -1,17 +1,19 @@
 {
   "swagger": "2.0",
+  "host": "sdr.dlss.stanford.edu",
+  "basePath": "/v1",
+  "schemes": [
+    "http"
+  ],
   "info": {
-    "version": "0.1.0",
-    "title": "identifier",
-    "description": "An API for providing identifiers.",
-    "contact": {
-      "name": "Christina Harlow",
-      "email": "cmharlow@stanford.edu"
+    "version": "0.0.2",
+    "title": "Id Service",
+    "description": "An API for calling identifier minter services, mainly DRUIDs, primarily for usage by TACO.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "identifiers.dlss.stanford.edu",
-  "basePath": "/v1",
-  "schemes": ["http"],
   "paths": {
     "/identifiers": {
       "get": {
@@ -21,10 +23,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Get a list of identifier types & sources supported",
+            "description": "Get a list of identifier minters supported by this API.",
             "schema": {
-                "$ref": "#/definitions/Sources"
+              "$ref": "#/definitions/Sources"
             }
+          },
+          "500": {
+            "description": "Your request could not be processed at this time."
           }
         }
       }
@@ -39,8 +44,11 @@
           "200": {
             "description": "Get a list of all Identifiers minted across types",
             "schema": {
-              "$ref": "#/definitions/Sources"
+              "$ref": "#/definitions/Identifiers"
             }
+          },
+          "500": {
+            "description": "Your request could not be processed at this time."
           }
         }
       }
@@ -48,26 +56,33 @@
     "/identifiers/druids": {
       "get": {
         "operationId": "getCurrentDRUIDs",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "List of DRUIDs currently being used",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Identifiers"
-              }
+              "$ref": "#/definitions/Identifiers"
             }
+          },
+          "500": {
+            "description": "Your request could not be processed at this time."
           }
         }
       },
       "post": {
         "operationId": "mintNewDRUIDs",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "query",
             "name": "quantity",
             "required": false,
             "type": "integer",
+            "default": 1,
             "description": "Number of DRUIDs to mint. Default is 1."
           }
         ],
@@ -80,30 +95,23 @@
           }
         }
       }
-    },
-    "/healthcheck": {
-      "get": {
-         "summary": "Health Check",
-         "description": "The healthcheck endpoint provides information about the health of the service.",
-         "operationId": "healthCheck",
-         "responses": {
-           "200": {
-             "description": "The service is functioning nominally",
-             "schema": {
-               "$ref": "#/definitions/HealthCheckResponse"
-             }
-           },
-           "503": {
-             "description": "The service is not working correctly",
-             "schema": {
-               "$ref": "#/definitions/HealthCheckResponse"
-             }
-           }
-         }
-      }
     }
   },
   "definitions": {
+    "Identifier": {
+      "type": "string",
+      "example": "aa222bb3333"
+    },
+    "Identifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Identifier"
+      },
+      "example": [
+        "aa222bb3333",
+        "dd444ee5555"
+      ]
+    },
     "Source": {
       "type": "object",
       "properties": {
@@ -114,40 +122,30 @@
           "type": "string"
         }
       },
-      "required": ["name", "template"]
+      "required": [
+        "name",
+        "template"
+      ],
+      "example": {
+        "name": "DRUID",
+        "template": "r:zznnnzznnnn"
+      }
     },
     "Sources": {
       "type": "array",
       "items": {
-        "$ref" : "#/definitions/Source"
-      }
-    },
-    "Identifier": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        }
+        "$ref": "#/definitions/Source"
       },
-      "required": ["id"]
-    },
-    "Identifiers": {
-      "type": "array",
-      "items": {
-        "$ref" : "#/definitions/Identifier"
-      }
-    },
-    "HealthCheckResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "description": "The status of the service"
+      "example": [
+        {
+          "name": "DRUID",
+          "template": "r:zznnnzznnnn"
+        },
+        {
+          "name": "DOI",
+          "template": "r:doi:zznnnzznnnn"
         }
-      },
-      "example": {
-        "status": "OK"
-      }
+      ]
     }
   }
 }

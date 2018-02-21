@@ -1,9 +1,26 @@
 # DLSS Identifiers API for AWS Applications
 This is a prototype that at the moment merely provides random DRUIDs.
 
+# DLSS Identifiers API & Micro-service
+
+## Guiding Questions around Identifier Service idea
+
+1. Why Id Service instead of calling SURI directly?
+    - Better permissions management (currently, SURI uses shared passwords across local codebases).
+    - Separate the specification from the implementation / make connections more modular as SURI may (or may not?) change.
+    - Set up a pattern for building APIs as AWS work continues
+    - Capture better analytics for AWS querying SURI or future SDR components via these proxy APIs.
+2. Identifier Service should be in AWS?
+    - Yes, if we can support in production. Given TACO is in AWS, Identifier Service in AWS seems a good step for this.
+3. Authentication for the Identifier Service
+    - TBD: method and how we can improve this (but probably having authentication attached to a to-be-created AWS IAM
+      Service Role)
+    - Proposal of using API keys (à la GitHub) also proposed
+    - Protection of SURI: Using SSL?
+
 ## Requirements
 
-### For SDR3:
+### For TACO / Hydrox:
 - Create a new DRUID on a single call for single identifier action
 - Support later additions (but no current implementation) for:
   - Request a list of DRUIDs
