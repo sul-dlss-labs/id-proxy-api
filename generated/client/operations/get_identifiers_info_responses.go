@@ -13,7 +13,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/sul-dlss-labs/id-proxy-api/generated/models"
+	"github.com/sul-dlss-labs/identifier-service/generated/models"
 )
 
 // GetIdentifiersInfoReader is a Reader for the GetIdentifiersInfo structure.

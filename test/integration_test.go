@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/sul-dlss-labs/id-proxy-api/config"
+	"github.com/sul-dlss-labs/identifier-service/config"
 	baloo "gopkg.in/h2non/baloo.v3"
 )
 

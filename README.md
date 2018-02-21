@@ -70,8 +70,8 @@ $ APP_PORT=1231 go run main.go
 
 ### Building for Docker
 ```shell
-$ docker build -t id-proxy-api .
-$ docker run -p 8080:8080 id-proxy-api
+$ docker build -t identifier-service .
+$ docker run -p 8080:8080 identifier-service
 ```
 
 ### Build for the local OS

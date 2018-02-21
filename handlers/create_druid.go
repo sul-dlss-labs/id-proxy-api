@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	app "github.com/sul-dlss-labs/id-proxy-api"
-	"github.com/sul-dlss-labs/id-proxy-api/druid"
-	"github.com/sul-dlss-labs/id-proxy-api/generated/models"
-	"github.com/sul-dlss-labs/id-proxy-api/generated/restapi/operations"
+	app "github.com/sul-dlss-labs/identifier-service"
+	"github.com/sul-dlss-labs/identifier-service/druid"
+	"github.com/sul-dlss-labs/identifier-service/generated/models"
+	"github.com/sul-dlss-labs/identifier-service/generated/restapi/operations"
 )
 
 // CreateDruid is the api endpoint for creating DRUIDs

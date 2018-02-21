@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/sul-dlss-labs/id-proxy-api/generated/models"
+	"github.com/sul-dlss-labs/identifier-service/generated/models"
 )
 
 // GetIdentifiersListOKCode is the HTTP code returned for type GetIdentifiersListOK

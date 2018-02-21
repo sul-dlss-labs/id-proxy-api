@@ -6,10 +6,10 @@ import (
 
 	"github.com/go-openapi/loads"
 	"github.com/justinas/alice"
-	app "github.com/sul-dlss-labs/id-proxy-api"
-	"github.com/sul-dlss-labs/id-proxy-api/generated/restapi"
-	"github.com/sul-dlss-labs/id-proxy-api/generated/restapi/operations"
-	"github.com/sul-dlss-labs/id-proxy-api/middleware"
+	app "github.com/sul-dlss-labs/identifier-service"
+	"github.com/sul-dlss-labs/identifier-service/generated/restapi"
+	"github.com/sul-dlss-labs/identifier-service/generated/restapi/operations"
+	"github.com/sul-dlss-labs/identifier-service/middleware"
 )
 
 // BuildAPI create new service API

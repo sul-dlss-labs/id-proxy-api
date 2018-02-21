@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/sul-dlss-labs/id-proxy-api/config"
+	"github.com/sul-dlss-labs/identifier-service/config"
 )
 
 // NewRuntime creates a new application level runtime that

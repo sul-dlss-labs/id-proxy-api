@@ -1,5 +1,5 @@
 FROM golang:alpine
-WORKDIR /go/src/github.com/sul-dlss-labs/id-proxy-api
+WORKDIR /go/src/github.com/sul-dlss-labs/identifier-service
 COPY . .
 RUN apk update && \
     apk add --no-cache --virtual .build-deps git && \
@@ -7,7 +7,7 @@ RUN apk update && \
     dep ensure && \
     apk del .build-deps
 
-WORKDIR /go/src/github.com/sul-dlss-labs/id-proxy-api/cmd/app
+WORKDIR /go/src/github.com/sul-dlss-labs/identifier-service/cmd/app
 RUN go install .
 
 CMD ["app"]

@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
-	app "github.com/sul-dlss-labs/id-proxy-api"
-	"github.com/sul-dlss-labs/id-proxy-api/config"
-	"github.com/sul-dlss-labs/id-proxy-api/generated/restapi"
-	"github.com/sul-dlss-labs/id-proxy-api/handlers"
+	app "github.com/sul-dlss-labs/identifier-service"
+	"github.com/sul-dlss-labs/identifier-service/config"
+	"github.com/sul-dlss-labs/identifier-service/generated/restapi"
+	"github.com/sul-dlss-labs/identifier-service/handlers"
 )
 
 func main() {

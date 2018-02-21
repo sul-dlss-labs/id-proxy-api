@@ -3,7 +3,7 @@ jobs:
   build_and_test:
     docker:
       - image: circleci/golang:latest
-    working_directory: /go/src/github.com/sul-dlss-labs/id-proxy-api
+    working_directory: /go/src/github.com/sul-dlss-labs/identifier-service
     steps:
       - checkout
       - run:
@@ -25,7 +25,7 @@ jobs:
   # register_image:
   #   docker:
   #     - image: circleci/golang:latest
-  #   working_directory: /go/src/github.com/sul-dlss-labs/id-proxy-api
+  #   working_directory: /go/src/github.com/sul-dlss-labs/identifier-service
   #   steps:
   #     - setup_remote_docker:
   #         version: 17.09.0-ce
@@ -40,7 +40,7 @@ jobs:
   # deploy_to_dev:
   #   docker:
   #     - image: circleci/golang:latest
-  #   working_directory: /go/src/github.com/sul-dlss-labs/id-proxy-api
+  #   working_directory: /go/src/github.com/sul-dlss-labs/identifier-service
   #   steps:
   #     - run:
   #         name: Install AWS CLI

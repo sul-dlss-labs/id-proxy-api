@@ -11,7 +11,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/sul-dlss-labs/id-proxy-api/generated/client/operations"
+	"github.com/sul-dlss-labs/identifier-service/generated/client/operations"
 )
 
 // Default identifier HTTP client.

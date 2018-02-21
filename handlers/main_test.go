@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	app "github.com/sul-dlss-labs/id-proxy-api"
+	app "github.com/sul-dlss-labs/identifier-service"
 )
 
 func setupFakeRuntime() *TestEnv {
