@@ -8,14 +8,22 @@ import (
 
 // Config is configuration for the application
 type Config struct {
-	Port int
+	AWSRegion           string
+	DynamodbEndpoint    string
+	DynamodbDisableSSL  bool
+	IdentifierTableName string
+	Port                int
 }
 
 // NewConfig creates a new configuration with values from environment variables
 // or defaults
 func NewConfig() *Config {
 	return &Config{
-		Port: getInteger("APP_PORT", 8080),
+		Port:                getInteger("APP_PORT", 8080),
+		AWSRegion:           getString("AWS_REGION", "localstack"),
+		DynamodbEndpoint:    getString("DYNAMO_DB_ENDPOINT", "localhost:4569"),
+		DynamodbDisableSSL:  getBool("DYNAMODB_DISABLE_SSL", true),
+		IdentifierTableName: getString("IDENTIFIER_TABLE_NAME", "druids"),
 	}
 }
 

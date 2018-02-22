@@ -63,7 +63,7 @@ This is a prototype that at the moment merely provides random DRUIDs.
 
 ```shell
 $ cd cmd/app
-$ APP_PORT=1231 go run main.go
+$ APP_PORT=1231 AWS_ACCESS_KEY_ID=999999 AWS_SECRET_KEY=1231 go run main.go
 ```
 
 ## Building the server binary
@@ -91,7 +91,7 @@ $ ./appd
 Then you can interact with it using `curl`:
 ```shell
 $ curl -X POST http://localhost:8080/v1/identifiers/druids
-# => [{"id":"testing"}]
+# => ["tx503wn4022"]
 ```
 
 ## Testing

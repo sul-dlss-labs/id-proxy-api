@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	rt, err := app.NewRuntime(config.NewConfig())
+	rt, err := app.NewDefaultRuntime(config.NewConfig())
 	if err != nil {
 		log.Fatalln(err)
 	}
