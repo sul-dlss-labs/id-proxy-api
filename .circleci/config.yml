@@ -22,20 +22,20 @@ jobs:
           name: Run tests
           command: APP_PORT=3000 go test -v ./...
 
-  # register_image:
-  #   docker:
-  #     - image: circleci/golang:latest
-  #   working_directory: /go/src/github.com/sul-dlss-labs/identifier-service
-  #   steps:
-  #     - setup_remote_docker:
-  #         version: 17.09.0-ce
-  #     - checkout
-  #     - run:
-  #         name: Build Image & Register Task
-  #         command: |
-  #           docker build -t suldlss/taco:$CIRCLE_SHA1 .
-  #           docker login -u $DOCKER_USER -p $DOCKER_PASS
-  #           docker push suldlss/taco:$CIRCLE_SHA1
+  register_image:
+    docker:
+      - image: circleci/golang:latest
+    working_directory: /go/src/github.com/sul-dlss-labs/identifier-service
+    steps:
+      - setup_remote_docker:
+          version: 17.09.0-ce
+      - checkout
+      - run:
+          name: Build Image & Register Task
+          command: |
+            docker build -t suldlss/identifier-service:$CIRCLE_SHA1 .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push suldlss/identifier-service:$CIRCLE_SHA1
 
   # deploy_to_dev:
   #   docker:
