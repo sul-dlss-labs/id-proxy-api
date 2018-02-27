@@ -139,6 +139,7 @@ There appears to be no best way to handle specification-based re-generation of t
 $ git rm -rf generated/
 $ mkdir generated
 $ swagger generate server -t generated --exclude-main
+$ swagger generate client -t generated
 ```
 
 ### Non-generated code
