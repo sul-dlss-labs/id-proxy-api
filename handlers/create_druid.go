@@ -11,6 +11,10 @@ import (
 // CreateDruid is the api endpoint for creating DRUIDs
 type CreateDruid struct{}
 
+// MaxQuantity is the maximum number of DRUIDs you can get per request.
+// This prevents denial of service by requesting a huge number
+const MaxQuantity int64 = 1000
+
 // NewCreateDruid makes a new instance of CreateDruid
 func NewCreateDruid(rt *app.Runtime) *CreateDruid {
 	return &CreateDruid{}
@@ -18,7 +22,13 @@ func NewCreateDruid(rt *app.Runtime) *CreateDruid {
 
 // Handle the HTTP response to /identifiers/druids
 func (d *CreateDruid) Handle(params operations.MintNewDRUIDSParams) middleware.Responder {
-	identifier := models.Identifier(druid.Generate())
-	identifiers := []models.Identifier{identifier}
+	identifiers := []models.Identifier{}
+	quantity := *params.Quantity
+	if quantity > MaxQuantity {
+		quantity = MaxQuantity
+	}
+	for i := 0; i < int(quantity); i++ {
+		identifiers = append(identifiers, models.Identifier(druid.Generate()))
+	}
 	return operations.NewMintNewDRUIDSOK().WithPayload(identifiers)
 }
