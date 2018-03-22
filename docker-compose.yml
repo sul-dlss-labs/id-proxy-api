@@ -1,0 +1,16 @@
+version: "2"
+services:
+  api:
+    build: .
+    environment:
+      APP_PORT: 8081
+  tester:
+    build:
+      context: .
+      dockerfile: Dockerfile.tester
+    environment:
+      TEST_REMOTE_HOST: "api:8081"
+    working_dir: /go/src/github.com/sul-dlss-labs/identifier-service
+    command: go test test/integration_test.go
+    depends_on:
+      - api

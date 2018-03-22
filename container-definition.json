@@ -1,0 +1,32 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "identifier",
+            "image": "suldlss/identifier-service:REPLACE_TAG",
+            "essential": true,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "infrastucture",
+                    "awslogs-region": "REPLACE_REGION",
+                    "awslogs-stream-prefix": "identifier"
+                }
+            },
+            "portMappings": [
+                {
+                    "containerPort": 8081,
+                    "hostPort": 8081
+                }
+            ]
+        }
+    ],
+    "cpu": "256",
+    "memory": "0.5GB",
+    "networkMode": "awsvpc",
+    "family": "identifier",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "executionRoleArn": "arn:aws:iam::REPLACE_ACCOUNT_ID:role/REPLACE_ENVIRONMENT-ecs-task-execution-role",
+    "taskRoleArn": "arn:aws:iam::REPLACE_ACCOUNT_ID:role/identifier-REPLACE_ENVIRONMENT-ecs-task-role"
+}
