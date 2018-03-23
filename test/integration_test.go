@@ -2,6 +2,7 @@ package test
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/sul-dlss-labs/identifier-service/config"
@@ -9,8 +10,12 @@ import (
 )
 
 func setupTest() *baloo.Client {
-	port := config.NewConfig().Port
-	return baloo.New(fmt.Sprintf("http://localhost:%v", port))
+	remoteHost, ok := os.LookupEnv("TEST_REMOTE_HOST")
+	if !ok {
+		port := config.NewConfig().Port
+		remoteHost = fmt.Sprintf("localhost:%v", port)
+	}
+	return baloo.New(fmt.Sprintf("http://%s", remoteHost))
 }
 
 func TestCreateDruid(t *testing.T) {
