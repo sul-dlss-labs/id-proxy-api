@@ -17,6 +17,12 @@
                     "containerPort": 8081,
                     "hostPort": 8081
                 }
+            ],
+            "environment": [
+                {
+                    "name": "APP_PORT",
+                    "value": "8081"
+                }
             ]
         }
     ],
