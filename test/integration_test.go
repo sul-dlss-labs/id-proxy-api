@@ -10,7 +10,7 @@ import (
 )
 
 func setupTest() *baloo.Client {
-	remoteHost, ok := os.LookupEnv("TEST_REMOTE_HOST")
+	remoteHost, ok := os.LookupEnv("TEST_REMOTE_ENDPOINT")
 	if !ok {
 		port := config.NewConfig().Port
 		remoteHost = fmt.Sprintf("localhost:%v", port)

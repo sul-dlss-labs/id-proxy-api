@@ -9,7 +9,7 @@ services:
       context: .
       dockerfile: Dockerfile.tester
     environment:
-      TEST_REMOTE_HOST: "api:8081"
+      TEST_REMOTE_ENDPOINT: "api:8081"
     working_dir: /go/src/github.com/sul-dlss-labs/identifier-service
     command: go test test/integration_test.go
     depends_on:
