@@ -42,8 +42,8 @@ This is a prototype that at the moment merely provides random DRUIDs.
       $ export PATH=~/go/bin:$PATH
       $ cd ~/go
       ```
-      Your Go code repositories will reside within `~/go/src/...` in the `$GOPATH`. Name these paths to avoid library clash, for example MyApp Go code could be in `~/go/src/github.com/sul-dlss-labs/identifier-service`. This should be where your Github repository resides too.
-3. In order to download the project code to `~/go/src/github.com/sul-dlss-labs/my_app`, from any directory in your ``$GOPATH`, run:
+      Your Go code repositories will reside within `~/go/src/...` in the `$GOPATH`. Name these paths to avoid library clash, for example identifier-service Go code could be in `~/go/src/github.com/sul-dlss-labs/identifier-service`. This should be where your Github repository resides too.
+3. In order to download the project code to `~/go/src/github.com/sul-dlss-labs/identifier-service`, from any directory in your ``$GOPATH`, run:
     ```bash
     $ go get github.com/sul-dlss-labs/identifier-service
     ```
